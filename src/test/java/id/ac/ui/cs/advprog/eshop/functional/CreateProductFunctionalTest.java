@@ -5,13 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -56,5 +57,27 @@ public class CreateProductFunctionalTest {
         WebElement productQuantityInTable = driver.findElement(By.xpath("//tr[last()]/td[2]"));
         String productQuantity = productQuantityInTable.getText();
         assertEquals("4", productQuantity);
+    }
+
+    @Test
+    void testNegativeQuantity(ChromeDriver driver) {
+        driver.get(baseUrl + "/product/list");
+
+        WebElement createProductButton = driver.findElement(By.linkText("Create Product"));
+        createProductButton.click();
+
+        WebElement nameProductInput = driver.findElement(By.id("nameInput"));
+        nameProductInput.clear();
+        nameProductInput.sendKeys("Halo Tes");
+
+        WebElement quantityProductInput = driver.findElement(By.id("quantityInput"));
+        quantityProductInput.clear();
+        quantityProductInput.sendKeys("-3");
+
+        // Execute the JavaScript function to update the button state
+        ((JavascriptExecutor) driver).executeScript("updateSubmitButton()");
+
+        // Assert that the button is disabled
+        assertFalse(driver.findElement(By.id("submitButton")).isEnabled());
     }
 }
