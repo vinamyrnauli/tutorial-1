@@ -1,12 +1,13 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomePageController {
-    @GetMapping("")
-    public String HomePage() {
-        return "HomePage";
+
+    @GetMapping("/")
+    public String homepage() {
+        return "homePage";
     }
 }
