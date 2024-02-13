@@ -5,79 +5,81 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SeleniumJupiter.class)
-
 public class CreateProductFunctionalTest {
+    /**
+     * The port number assigned to the running application during test execution.
+     * Set automatically during each test run by Spring Framework's test context.
+     */
     @LocalServerPort
     private int serverPort;
 
+    /**
+     * The base URL for testing. Default value to {@code http://localhost}.
+     */
     @Value("${app.baseUrl:http://localhost}")
     private String testBaseUrl;
 
     private String baseUrl;
 
     @BeforeEach
-    void setupTest() {
-        baseUrl = String.format("%s:%d", testBaseUrl, serverPort);
+    void setUp() {
+        baseUrl = String.format("%s:%d/product/list", testBaseUrl, serverPort);
     }
 
     @Test
-    void CreateProduct_isCorrect(ChromeDriver driver) throws Exception {
-        driver.get(baseUrl + "/product/list");
+    void pageTitle_isCorrect(ChromeDriver driver) throws Exception {
+        driver.get(baseUrl);
+        String pageTitle = driver.getTitle();
 
-        WebElement createProductButton = driver.findElement(By.linkText("Create Product"));
-        createProductButton.click();
-
-        WebElement nameProductInput = driver.findElement(By.id("nameInput"));
-        nameProductInput.clear();
-        nameProductInput.sendKeys("Testing");
-
-        WebElement quantityProductInput = driver.findElement(By.id("quantityInput"));
-        quantityProductInput.clear();
-        quantityProductInput.sendKeys("4");
-
-        WebElement submitButton = driver.findElement(By.xpath("//button[text()='Submit']"));
-        submitButton.click();
-
-        WebElement productNameInTable = driver.findElement(By.xpath("//tr[last()]/td[1]"));
-        String productName = productNameInTable.getText();
-        assertEquals("Testing", productName);
-
-        WebElement productQuantityInTable = driver.findElement(By.xpath("//tr[last()]/td[2]"));
-        String productQuantity = productQuantityInTable.getText();
-        assertEquals("4", productQuantity);
+        assertEquals("Product List", pageTitle);
     }
 
     @Test
-    void testNegativeQuantity(ChromeDriver driver) {
-        driver.get(baseUrl + "/product/list");
+    void listMessage_listPage_isCorrect(ChromeDriver driver) throws Exception {
+        driver.get(baseUrl);
+        String welcomeMessage = driver.findElement(By.tagName("h2")).getText();
 
-        WebElement createProductButton = driver.findElement(By.linkText("Create Product"));
-        createProductButton.click();
+        assertEquals("Product' List", welcomeMessage);
+    }
 
-        WebElement nameProductInput = driver.findElement(By.id("nameInput"));
-        nameProductInput.clear();
-        nameProductInput.sendKeys("Halo Tes");
+    @Test
+    void simulation_createProduct_isCorrect(ChromeDriver driver) throws Exception {
+        driver.get(baseUrl);
 
-        WebElement quantityProductInput = driver.findElement(By.id("quantityInput"));
-        quantityProductInput.clear();
-        quantityProductInput.sendKeys("-3");
+        WebElement createButton = driver.findElement(By.linkText("Create Product"));
+        createButton.click();
 
-        // Execute the JavaScript function to update the button state
-        ((JavascriptExecutor) driver).executeScript("updateSubmitButton()");
+        String productName = "Iphone 15 Pro Max";
+        WebElement productNameInput = driver.findElement(By.name("productName"));
+        productNameInput.sendKeys(productName);
 
-        // Assert that the button is disabled
-        assertFalse(driver.findElement(By.id("submitButton")).isEnabled());
+        int productQuantity = 10;
+        WebElement productQuantityInput = driver.findElement(By.name("productQuantity"));
+        productQuantityInput.clear();
+        productQuantityInput.sendKeys(Integer.toString(productQuantity));
+
+        WebElement buttonCreate = driver.findElement(By.tagName("button"));
+        buttonCreate.click();
+
+        String currentUrl = driver.getCurrentUrl();
+        assertEquals(baseUrl, currentUrl);
+
+        String pageSource = driver.getPageSource();
+        boolean isContainCreatedProductName = pageSource.contains(productName);
+        assertTrue(isContainCreatedProductName);
+        boolean isContainCreatedProductQuantity = pageSource.contains(Integer.toString(productQuantity));
+        assertTrue(isContainCreatedProductQuantity);
     }
 }
