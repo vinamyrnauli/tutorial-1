@@ -27,7 +27,7 @@ Terdapat duplikasi kode pada metode `CreateProduct_isCorrect()`. Hal ini dapat m
 
 [![code smells](https://sonarcloud.io/api/project_badges/measure?project=advance-programming-tutorial_tutorial-1&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=vinamyrnauli_tutorial-1)
 
-#### List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.
+## List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.
 1. Tidak diperlukannya *modifier*. Seharusnya *class* dan metode pengujian JUnit5 memiliki visibilitas *default*. Penggunaan *modifier public* pada *class* atau metode tidak direkomendasikan. Jika visibilitasnya *default*, hal ini dapat membantu menjaga isolasi pengujuan dan mencegah akses yang tidak diinginkan.
 
 **Solusi:** mengubah visibilitasnya dengan menghapus kata kunci *public* atau *protected* menjadi *modifier default*.
@@ -43,10 +43,13 @@ Terdapat duplikasi kode pada metode `CreateProduct_isCorrect()`. Hal ini dapat m
 **Solusi:** mengganti objek yang menggunakan injeksi @Autowired dengan menginisialisasi *class*-nya secara langsung.
 <br>
 
-#### Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current implementation has met the definition of Continuous Integration and Continuous Deployment? Explain the reasons (minimum 3 sentences)!
-Menurut saya, implementasinya telah memenuhi prinsip-prinsip *Continuous Integration* dan *Continuous Deployment* (CI/CD) dengan baik. Dalam GitHub *workflows*, proyek saya sudah otomatis melakukan *Continuous Integration* (CI) dengan uji coba dan pemindaian kode menggunakan SonarCloud tiap kali *push* ke repositori GitHub.
+## Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current implementation has met the definition of Continuous Integration and Continuous Deployment? Explain the reasons (minimum 3 sentences)!
+Menurut saya, implementasinya telah memenuhi prinsip-prinsip *Continuous Integration* dan *Continuous Deployment* (CI/CD) dengan baik. Dalam GitHub *workflows*, proyek saya sudah otomatis melakukan *Continuous Integration* (CI) dengan uji coba dan pemindaian kode menggunakan SonarCloud tiap kali *push* ke repositori GitHub. Hal ini dapat memastikan bahwa tiap perubahan kode yang ada di repositori melalui *push* sudah melalui pengujian dan analisis yang memadai sebelu diintegrasikan ke dalam proyek.
 
-Tak hanya itu, sistem otomatisasi *Continuous Deployment* (CD) akan mengelola proses *deployment* ke platform Koyeb secara langsung tiap kali ada *push* atau *pull request* ke suatu *branch* repositori GitHub saya.
+Tak hanya itu, sistem otomatisasi *Continuous Deployment* (CD) akan mengelola proses *deployment* ke platform Koyeb secara langsung tiap kali ada *push* atau *pull request* ke suatu *branch* repositori GitHub saya.Dengan demikian, tiap kali ada perubahan atau permintaan untuk perubahan kode, sistem secara otomatis akan mengelola proses *deployment* tanpa perlu ikut campur *developer*.
+
+Dengan demikian, implementasi bukan hanya memenuhi prinsip-prinsip CI/CD dengan baik, namun juga mengintegrasikan alur kerja otomatis yang efisien dan dapat diandalkan. Kita juga harus memastikan kualitas dan keamanan kode yang dihasilkan.
+
 <br>
 
 </details>
