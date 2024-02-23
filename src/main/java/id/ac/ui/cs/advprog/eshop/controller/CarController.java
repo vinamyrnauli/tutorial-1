@@ -19,7 +19,7 @@ import id.ac.ui.cs.advprog.eshop.service.CarService;
 @RequestMapping("/car")
 public class CarController {
     @Autowired
-    private CarServiceImpl carService;
+    private CarService carService;
 
     @GetMapping("/createCar")
     public String createCarPage(Model model) {
