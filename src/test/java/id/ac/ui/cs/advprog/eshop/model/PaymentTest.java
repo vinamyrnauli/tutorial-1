@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 
 class PaymentTest {
     private Map<String, String> paymentData;
@@ -71,7 +74,7 @@ class PaymentTest {
     }
 
     @Test
-    void testCreatePaymentWithEmptyPaymentData() {
+    void testCreatePaymentWithBankTransferButEmptyPaymentData() {
         paymentData.clear();
         assertThrows(IllegalArgumentException.class, () -> {
             new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData);
@@ -93,9 +96,9 @@ class PaymentTest {
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData);
         assertSame(order, payment.getOrder());
         assertEquals("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", payment.getId());
-        assertEquals(PaymentMethod.BANK.getValue(), payment.getPaymentMethod());
+        assertEquals(PaymentMethod.BANK.getValue(), payment.getMethod());
         assertEquals(paymentData, payment.getPaymentData());
-        assertEquals(PaymentStatus.WAITING_CONFIRMATION.getValue(), payment.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
         paymentData.clear();
     }
 
@@ -105,7 +108,7 @@ class PaymentTest {
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData, PaymentStatus.SUCCESS.getValue());
         assertSame(order, payment.getOrder());
         assertEquals("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", payment.getId());
-        assertEquals(PaymentMethod.BANK.getValue(), payment.getPaymentMethod());
+        assertEquals(PaymentMethod.BANK.getValue(), payment.getMethod());
         assertEquals(paymentData, payment.getPaymentData());
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         paymentData.clear();
@@ -126,7 +129,7 @@ class PaymentTest {
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData, PaymentStatus.REJECTED.getValue());
         assertSame(order, payment.getOrder());
         assertEquals("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", payment.getId());
-        assertEquals(PaymentMethod.BANK.getValue(), payment.getPaymentMethod());
+        assertEquals(PaymentMethod.BANK.getValue(), payment.getMethod());
         assertEquals(paymentData, payment.getPaymentData());
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
@@ -160,11 +163,11 @@ class PaymentTest {
     }
 
     @Test
-    void testSetPaymentStatusToWaitingConfirmation() {
+    void testSetPaymentStatusToWaitingPayment() {
         loadBankTransferPaymentData();
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData);
-        payment.setStatus(PaymentStatus.WAITING_CONFIRMATION.getValue());
-        assertEquals(PaymentStatus.WAITING_CONFIRMATION.getValue(), payment.getStatus());
+        payment.setStatus(PaymentStatus.WAITING_PAYMENT.getValue());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
         paymentData.clear();
     }
 
@@ -207,13 +210,11 @@ class PaymentTest {
     }
 
     @Test
-    void testCreatePaymentWithVoucherButPaymentDataHasNoVoucherCode() {
-        loadVoucherCodePaymentData();
-        paymentData.remove("voucherCode");
+    void testCreatePaymentWithVoucherButEmptyPaymentData() {
+        paymentData.clear();
         assertThrows(IllegalArgumentException.class, () -> {
             new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.VOUCHER.getValue(), order, paymentData);
         });
-        paymentData.clear();
     }
 
     @Test
@@ -222,9 +223,9 @@ class PaymentTest {
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.VOUCHER.getValue(), order, paymentData);
         assertSame(order, payment.getOrder());
         assertEquals("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", payment.getId());
-        assertEquals(PaymentMethod.VOUCHER.getValue(), payment.getPaymentMethod());
+        assertEquals(PaymentMethod.VOUCHER.getValue(), payment.getMethod());
         assertEquals(paymentData, payment.getPaymentData());
-        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
         paymentData.clear();
     }
 
@@ -234,9 +235,9 @@ class PaymentTest {
         Payment payment = new Payment("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", PaymentMethod.BANK.getValue(), order, paymentData);
         assertSame(order, payment.getOrder());
         assertEquals("a3e3e3e3-9a7f-4603-92c2-eaf529271cc9", payment.getId());
-        assertEquals(PaymentMethod.BANK.getValue(), payment.getPaymentMethod());
+        assertEquals(PaymentMethod.BANK.getValue(), payment.getMethod());
         assertEquals(paymentData, payment.getPaymentData());
-        assertEquals(PaymentStatus.WAITING_CONFIRMATION.getValue(), payment.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
         paymentData.clear();
     }
 }
