@@ -102,7 +102,7 @@ class OrderRepositoryTest {
         }
 
         List<Order> findResult = orderRepository.findAllByAuthor(orders.get(1).getAuthor());
-        assertEquals(2, orderList.size());
+        assertEquals(2, findResult.size());
     }
 
     @Test
