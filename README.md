@@ -1,8 +1,8 @@
-**Nama: Vina Myrnauli Abigail Siallagan**
-<br>
-**Kelas: Pemrograman Lanjut - A**
-<br>
-**NPM: 2206825776**
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=advance-programming-tutorial_tutorial-1&metric=coverage)](https://sonarcloud.io/summary/new_code?id=vinamyrnauli_tutorial-1)
+
+[![quality gate](https://sonarcloud.io/api/project_badges/measure?project=advance-programming-tutorial_tutorial-1&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vinamyrnauli_tutorial-1)
+
+[![code smells](https://sonarcloud.io/api/project_badges/measure?project=advance-programming-tutorial_tutorial-1&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=vinamyrnauli_tutorial-1)
 
 <details>
 <summary>Tutorial 1</summary>
@@ -102,21 +102,4 @@ Pada `CarRepository`, saya mengganti objek dari `CarServiceImpl` yang merupakan 
 <br>
 
 - **Ketergantungan Tinggi antara Modul atau Metode:** Jika tidak mengikuti ISP dan LSP, basis kode terikat erat dan kurang fleksibel karena antarmuka, abstraksi, atau kelas dasar dengan metode maupun dependensi yang tidak perlu.
-</details>
-
-<details>
-<summary>Tutorial 4</summary>
-
-### **Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.**
-- Saya memastikan bahwa kode yang dibuat sudah memiliki cukup tes fungsional agar dapat memastikan bahwa aplikasi saya berfungsi dengan baik dari perspektif pengguna. Saya juga telah memeriksa tiap kasus dengan cermat dan memastikan komponen-komponen terpasang dengan benar. Namun, untuk meningkatkan keakuratan pengujian, saya akan lebih memperhatikan apakah tes saya mencakup semua kasus uji yang mungkin, terutama dalam menguji interaksi antar komponen.
-- Tes yang saya sudah buat dapat memberi saya kepastian untuk melakukan refaktorisasi kode tanpa perlu khawatir. Selain itu, saya juga mempertimbangkan jika diperlukannya unit tes tambahan yang bergantung kepada kebutuhan desain kode yang saya buat. Namun, saya akan lebih memperhatikan proporsi antara unit tes dan tes integrasi agar dapat memberikan *feedback* yang lebih baik terhadap desain kode.
-- Siklus *feedback* saya sudah lumayan cepat. Saya juga mempertimbangkan untuk memperbaiki tes secara teratur untuk memastikan tes berjalan dengan efisien dan cepat. Namun, saya akan terus mencari cara untuk mempercepat siklus feedback agar dapat mendeteksi bug lebih cepat dan mengurangi waktu pengembangan.
-  <br>
-
-### **You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.**
-- Saya sudah membagi tes menjadi *unit test* dan *functional test* yang dapat beroperasi secara independen tanpa saling mengganggu. Tak hanya itu, saya akan lebih memperhatikan untuk memastikan bahwa setiap tes memiliki fokus yang jelas dan spesifik.
-- Tes saya sudah dirancang untuk berjalan secepat mungkin dengan mencari cara untuk meningkatkan efisiensi dan kecepatan tes.
-- Agar terhindar dari duplikasi, saya menerapkan teknik seperti *mock, setUp, tearDown,* dan lainnya.
-- Saya sudah konsisten dalam membuat tes pada tiap iterasi dan ketika fungsi saya membutuhkan pemanggilan fungsi lain, saya menggunakan teknik *Test Double*. Saya akan terus memastikan konsistensi ini dan memperhatikan bahwa tiap tes berkontribusi secara signifikan terhadap kualitas keseluruhan kode saya.
-- Pengujian saya memberikan validasi yang kuat dan mencakup semua *happy path* dan *unhappy path*, serta segala kemungkinan kesalahan yang dapat muncul. Jadi, saya akan lebih memperhatikan bahwa tiap tes benar-benar mencakup semua kemungkinan skenario yang mungkin terjadi.
 </details>
